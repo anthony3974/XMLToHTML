@@ -36,7 +36,7 @@
             jk
             </summary>
         </member>
-        <member name="M:FileManager.FileRename.ReName(System.String)">
+        <member name="E:FileManager.FileRename.ReName(System.String)">
             <summary>
             Renames the file, extension incuded (will not save double extension)
             </summary>
