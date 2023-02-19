@@ -9,13 +9,13 @@ namespace XMLToHTML
 
         static void MakeInHTMLStyle(ref string htmlPart2)
         {
-            htmlPart2 = "<style>" + css + "</style>";
+            htmlPart2 = "<style>\r\n" + css + "\r\n</style>";
         }
 
         static void MakeFileHTMLStyle(string path)
         {
             StreamWriter sw = new StreamWriter(path + "\\style.css");
-            sw.Write("<style>" + css + "</style>");
+            sw.Write("<style>\r\n" + css + "\r\n</style>");
             sw.Close();
         }
     }

@@ -2,12 +2,12 @@
 
 ## makes an html page from the c# api xml documention
 
-version one
+version Final
 
 works for me, may work for you
 
 incuded template layout for xml
 
-and sample output
+and sample output html
 
 

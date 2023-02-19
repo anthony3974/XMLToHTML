@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClassLibrary1</name>
+    </assembly>
+    <members>
+        <member name="T:FileManager.ClassName">
+            <summary>
+            Summary for class
+            </summary>
+        </member>
+        <member name="M:FileManager.ClassName.getVersion">
+            <summary>
+            Gets version of the class
+            </summary>
+            <returns>Version</returns>
+        </member>
+        <member name="M:FileManager.ClassName.#ctor(System.String)">
+            <summary>
+            Summary for constructor
+            multi line suported
+            </summary>
+            <param name="param1">frist param</param>
+        </member>
+        <member name="F:FileManager.ClassName.felid1">
+            <summary>
+            felid type 1
+            </summary>
+        </member>
+        <member name="F:FileManager.ClassName.felid2">
+            <summary>
+            felid type 2
+            </summary>
+        </member>
+        <member name="M:FileManager.ClassName.Method1(System.Boolean)">
+            <summary>
+            Summary for the method 1
+            </summary>
+            <param name="param1">The frist param summary</param>
+        </member>
+        <member name="M:FileManager.ClassName.Method2(System.Boolean)">
+            <summary>
+            Summary for the method 2
+            </summary>
+            <param name="param1">The frist param summary</param>
+        </member>
+        <member name="P:FileManager.ClassName.Property1">
+            <summary>
+            property sum 1
+            </summary>
+        </member>
+        <member name="P:FileManager.ClassName.Property2">
+            <summary>
+            property sum 2
+            </summary>
+        </member>
+    </members>
+</doc>
