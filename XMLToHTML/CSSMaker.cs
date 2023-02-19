@@ -12,9 +12,9 @@ namespace XMLToHTML
             htmlPart2 = css;
         }
 
-        static void MakeFileHTMLStyle()
+        static void MakeFileHTMLStyle(string path)
         {
-            StreamWriter sw = new StreamWriter("style.css");
+            StreamWriter sw = new StreamWriter(path + "\\style.css");
             sw.Write(css);
             sw.Close();
         }

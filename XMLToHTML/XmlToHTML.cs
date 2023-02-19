@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Reflection.Emit;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace XMLToHTML
 {
@@ -13,7 +11,7 @@ namespace XMLToHTML
         static void Main(string[] args)
         {
             // settings
-            bool oneFile = false;
+            bool oneFile = true;
             string icoPath = null;
             bool showXMLReads = false;
             bool showHTMLWrites = false;
@@ -32,15 +30,15 @@ namespace XMLToHTML
                 {
                     StreamReader xml = new StreamReader(file); // make new file reader from the xml file
                     FileInfo fileInfo = new FileInfo(file);  // get the name for saving file
-                    string htmlfileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length); // set the name
-                    StreamWriter html = new StreamWriter(htmlfileName + ".html"); // make an html file to write with the file name                                                           
+                    string htmlfileName = pathToStartScanning + "\\" + fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length) + ".html"; // set the name of the html file
+                    StreamWriter html = new StreamWriter(htmlfileName); // make an html file to write with the file name                                                           
                     string htmlPart1 = $"<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n<meta charset=\"utf-8\">\r\n<title> Docs for {htmlfileName.Substring(htmlfileName.LastIndexOf("\\") + 1)} </title>\r\n"; // initial html part 1
                     string htmlPart2 = "<link rel=\"stylesheet\" href=\"style.css\">\r\n"; // initial html part 2
                     string htmlPart3 = ""; // initial html part 3
                     if (icoPath != null) htmlPart3 = $"<link rel=\"icon\" href=\"{icoPath}\" type=\"image/icon\">"; // initial html part 3
                     string htmlPart4 = "\r\n</head>\r\n<body>"; // initial html part 4
                     if (oneFile && makeCss) MakeInHTMLStyle(ref htmlPart2);
-                    else if (!oneFile && makeCss) MakeFileHTMLStyle();
+                    else if (!oneFile && makeCss) MakeFileHTMLStyle(pathToStartScanning);
                     Write(htmlPart1 + htmlPart2 + htmlPart3 + htmlPart4); // writing the basic starting html code
 
                     string line = xml.ReadLine(); // read first line
@@ -64,6 +62,12 @@ namespace XMLToHTML
                         string tittle = Regex.Match(line, "name>(.*)</name").Groups[1].Value; // find the name and save it to the varable tittle
                         Write($"<section class=\"h1\">{tittle}"); // make a section with the tittle name
                         Read(3); // reads 3 lines to get the member
+                    }
+                    else // if it is not a c# api xml file then
+                    {
+                        html.Close(); // close
+                        File.Delete(htmlfileName); // delete
+                        continue; // do to next file
                     }
                     if (line.Contains("<member")) // start the scan
                     {
