@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClassLibrary1</name>
+    </assembly>
+    <members>
+        <member name="T:FileManager.FileRename">
+            <summary>
+            Renames a single file dynamically
+            </summary>
+        </member>
+        <member name="M:FileManager.FileRename.getVersion">
+            <summary>
+            Gets version of the class
+            </summary>
+            <returns>Version</returns>
+        </member>
+        <member name="P:FileManager.FileRename.Fi2">
+            <summary>
+            Get the FileInfo object
+            </summary>
+        </member>
+        <member name="M:FileManager.FileRename.#ctor(System.String)">
+            <summary>
+            Makes a new FileRename
+            </summary>
+            <param name="fullFilePath">Single file path+name</param>
+        </member>
+        <member name="F:FileManager.FileRename.lko">
+            <summary>
+            fi 1234
+            </summary>
+        </member>
+        <member name="F:FileManager.FileRename.fi">
+            <summary>
+            jk
+            </summary>
+        </member>
+        <member name="M:FileManager.FileRename.ReName(System.String)">
+            <summary>
+            Renames the file, extension incuded (will not save double extension)
+            </summary>
+            <param name="newName">The name to change the file to</param>
+        </member>
+        <member name="M:FileManager.FileRename.RemoveSpecial">
+            <summary>
+            Renames the file, removing .,_()[]
+            </summary>
+        </member>
+        <member name="M:FileManager.FileRename.RemoveSpecial(System.Text.RegularExpressions.Regex)">
+            <summary>
+            Renames the file, removing custom pattern
+            </summary>
+        </member>
+        <member name="M:FileManager.FileRename.RemoveSpaces(System.Boolean)">
+            <summary>
+            Renames the file, removing spaces
+            </summary>
+            <param name="all">If true, file will not contian space</param>
+        </member>
+        <member name="P:FileManager.FileRename.Fi">
+            <summary>
+            Get the FileInfo object
+            </summary>
+        </member>
+    </members>
+</doc>
