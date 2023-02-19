@@ -11,7 +11,7 @@ namespace XMLToHTML
         static void Main(string[] args)
         {
             // settings
-            bool oneFile = true;
+            bool oneFile = false;
             string icoPath = null;
             bool showXMLReads = false;
             bool showHTMLWrites = false;
