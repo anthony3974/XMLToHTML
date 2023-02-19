@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FileManager">
+      <HintPath>..\..\1 Class Dills\FileManager.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSSMaker.cs" />
-    <Compile Include="XmlToHTML.cs" />
+    <Compile Include="XMLToHTML.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timer.cs" />
   </ItemGroup>

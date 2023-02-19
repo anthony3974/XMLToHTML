@@ -17,24 +17,29 @@ namespace XMLToHTML
             string icoPath = null;
             bool showXMLReads = false;
             bool showHTMLWrites = false;
-
+            bool manyScan = true;
+            bool makeCss = true;
 
             // main code
-            string[] files = Directory.GetFiles("."); // gets list of dir files ending with xml
+            string[] files; // gobal varable files
+            if (!manyScan) files = Directory.GetFiles("."); // gets list of dir files in the current dir
+            else { files = FFScaner.ScanFiles(".").ToArray(); } // gets list of dir files in the current dir
+
             foreach (string file in files) // main loop for each file in current dir
             {
-                if (file.EndsWith(".xml")) // if ends with xml
+                if (file.EndsWith(".xml")) // if file ends with xml
                 {
-                    StreamReader xml = new StreamReader(file); // make new file reader
+                    StreamReader xml = new StreamReader(file); // make new file reader from the xml file
                     FileInfo fileInfo = new FileInfo(file);  // get the name for saving file
-                    string htmlfileName = fileInfo.FullName.Substring(0, fileInfo.FullName.Length - fileInfo.Extension.Length); // set the name
+                    string htmlfileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length); // set the name
                     StreamWriter html = new StreamWriter(htmlfileName + ".html"); // make an html file to write with the file name                                                           
                     string htmlPart1 = $"<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n<meta charset=\"utf-8\">\r\n<title> Docs for {htmlfileName.Substring(htmlfileName.LastIndexOf("\\") + 1)} </title>\r\n"; // initial html part 1
                     string htmlPart2 = "<link rel=\"stylesheet\" href=\"style.css\">\r\n"; // initial html part 2
                     string htmlPart3 = ""; // initial html part 3
                     if (icoPath != null) htmlPart3 = $"<link rel=\"icon\" href=\"{icoPath}\" type=\"image/icon\">"; // initial html part 3
                     string htmlPart4 = "\r\n</head>\r\n<body>"; // initial html part 4
-                    if (oneFile) MakeInHTMLStyle(ref htmlPart2);
+                    if (oneFile && makeCss) MakeInHTMLStyle(ref htmlPart2);
+                    else if (!oneFile && makeCss) MakeFileHTMLStyle();
                     Write(htmlPart1 + htmlPart2 + htmlPart3 + htmlPart4); // writing the basic starting html code
 
                     string line = xml.ReadLine(); // read first line
@@ -73,7 +78,7 @@ namespace XMLToHTML
                                 {
                                     Read(); // gets the next line with the summary
                                     if (h6 != H.none) Write($"<section class=\"sum {h6}\"><strong>Summary:</strong> "); // makes the inital summary and p tag
-                                    else Write($"<section class=\"sum\"><strong>Summary:</strong> "); // makes the inital summary and p tag
+                                    else Write("<section class=\"sum\"><strong>Summary:</strong> "); // makes the inital summary and p tag
                                     while (!line.Contains("</summary>")) // add each line until the summary ends
                                     {
                                         Write(line.Trim() + "<br>"); // writes the line in the xml file then adds a break
@@ -100,69 +105,70 @@ namespace XMLToHTML
                                         settype(T.Method); // set the section
                                         Read(); // read the next line
                                         Write("<section class=\"h5\">"); // make sub section for the method
-                                        writesum(H.h6s);
-                                        if (line.Contains("<param"))
+                                        writesum(H.h6s); // makes the summary for the method
+                                        if (line.Contains("<param")) // if the method has params
                                         {
-                                            Write($"</section><section class=\"h4\" style=\"background-color: inherit;\"></section><section class=\"h5\">");
-                                            Write("<section class=\"h6m\">");
-                                            while (line.Contains("<param"))
+                                            Write("</section><section class=\"h4\" style=\"background-color: inherit;\"></section><section class=\"h5\">"); // makes a divider from summary to params and opens section to put params
+                                            Write("<section class=\"h6m\">"); // color the background for the set of params
+                                            while (line.Contains("<param")) // for each params, loop
                                             {
-                                                string paramn = Regex.Match(line, "name=\"(.*)\">").Groups[1].Value;
-                                                string paramd = Regex.Match(line, "\">(.*)<\\/").Groups[1].Value;
-                                                Write($"<strong>Param:</strong> {paramn}: {paramd}<br>");
-                                                Read();
+                                                string paramn = Regex.Match(line, "name=\"(.*)\">").Groups[1].Value; // get the name of the param
+                                                string paramd = Regex.Match(line, "\">(.*)<\\/").Groups[1].Value; // get the message of the param
+                                                Write($"<strong>Param:</strong> {paramn}: {paramd}<br>"); // writes the two values to the html file
+                                                Read(); // reads the next line
                                             }
-                                            Write("</section>");
+                                            Write("</section>"); // ends the params section
                                         }
-                                        if (line.Contains("<returns>"))
+                                        if (line.Contains("<returns>")) // checks if there are any returns
                                         {
-                                            Write($"</section><section class=\"h4 {T.Method}\"></section><section class=\"h5\">");
-                                            string returns = Regex.Match(line, ">(.*)<\\/").Groups[1].Value;
-                                            Write($"<section class=\"h6m\"><strong>Returns:</strong> {returns}</section>");
-                                            Read();
+                                            Write($"</section><section class=\"h4 {T.Method}\"></section><section class=\"h5\">"); // makes a divider from params/summary to return and opens section to put return in
+                                            string returns = Regex.Match(line, ">(.*)<\\/").Groups[1].Value; // gets the description of what is returned
+                                            Write($"<section class=\"h6m\"><strong>Returns:</strong> {returns}</section>"); // writes the description to the html file
+                                            Read(); // reads the next line
                                         }
-                                        Write($"</section>");
-                                        Read();
+                                        Write("</section>"); // ends the section for the method
+                                        Read(); // reads the next line
                                     }
-                                    else if (line.Contains("P:"))
+                                    else if (line.Contains("P:")) // if line is property type
                                     {
-                                        settype(T.Property);
-                                        Read();
-                                        Write("<section class=\"h5\">");
-                                        writesum(H.h6s);
-                                        Write($"</section>");
-                                        Read();
+                                        settype(T.Property); // set the section
+                                        Read(); // reads the next line(s)
+                                        Write("<section class=\"h5\">"); // start of section
+                                        writesum(H.h6s); // makes the summary for the property
+                                        Write("</section>"); // end of section
+                                        Read(); // reads the next line(s)
                                     }
-                                    else if (line.Contains("F:"))
+                                    else if (line.Contains("F:")) // if line is felid type
                                     {
-                                        settype(T.Field);
-                                        Read();
-                                        Write("<section class=\"h5\">");
-                                        writesum(H.h6s);
-                                        Write($"</section>");
-                                        Read();
+                                        settype(T.Field); // set the section
+                                        Read(); // reads the next line(s)
+                                        Write("<section class=\"h5\">"); // start of section
+                                        writesum(H.h6s); // makes the summary for the felid
+                                        Write("</section>"); // end of section
+                                        Read(); // reads the next line(s)
                                     }
-                                    else if (line.Contains(":"))
+                                    else if (line.Contains(":")) // other types are not suported
                                     {
-                                        settype(T.Invalid);
-                                        Console.WriteLine("not a vaild type");
-                                        Read();
-                                        Write("<p style=\"color:red;\"> <strong>Invalid type</strong></p>");
-                                        while (!line.Contains("</member")) { Read(); }
-                                        Read();
+                                        settype(T.Invalid); // set the section 
+                                        Console.WriteLine("not a vaild type"); // writes not a valid type
+                                        Read(); // reads the next line(s)
+                                        Write("<section style=\"color:red;\"> <strong>Invalid type</strong></section>"); // writes a section saying not valid type
+                                        while (!line.Contains("</member")) { Read(); } // reads the next line(s)
+                                        Read(); // reads the next line(s)
                                     }
-                                    Write($"</section>");
-                                    Write($"<section class=\"h3\"></section>");
+                                    Write("</section>"); // ends the section for the data type
+                                    Write("<section class=\"h3\"></section>"); // makes a divider section
                                 }
-                                Write($"</section>");
+                                Write("</section>"); // ends section for sub data type
                             }
-                            Write($"</section>");
-                            Write($"<section class=\"h1\"></section>");
-                            type = getType();
+                            Write("</section>"); // ends section for data type
+                            Write("<section class=\"h1\"></section>"); // makes a divider for data types
+                            type = getType(); // method to set type to see if it should run again
                         }
                     }
-                    html.Write("</section>\r\n</body>\r\n</html>");
-                    html.Close();
+                    html.Write("</section>\r\n</body>\r\n</html>"); // ends section for data type
+                    html.Close(); // closes the html file
+                    xml.Close(); // closes the xml file
                 }
             }
         }
