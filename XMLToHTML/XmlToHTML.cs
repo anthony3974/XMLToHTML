@@ -21,8 +21,8 @@ namespace XMLToHTML
             // main code
             string[] files; // gobal varable files
             string pathToStartScanning = ".."; // scan files here
-            if (!manyScan) files = Directory.GetFiles(pathToStartScanning, ".xml"); // gets list of dir files in the current dir
-            else { files = Directory.GetFiles(pathToStartScanning, ".xml", SearchOption.AllDirectories); } // gets list of dir files in the current dir
+            if (!manyScan) files = Directory.GetFiles(pathToStartScanning, "*.xml"); // gets list of dir files in the current dir
+            else { files = Directory.GetFiles(pathToStartScanning, "*.xml", SearchOption.AllDirectories); } // gets list of dir files in the current dir
 
             foreach (string file in files) // main loop for each file in current dir
             {
