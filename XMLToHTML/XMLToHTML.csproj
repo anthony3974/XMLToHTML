@@ -54,4 +54,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "C:\Users\Anthony\OneDrive\Documents\Computer Coding\Personal\C#\XMLToHTML\XMLToHTML\bin\Debug\XMLToHTML.exe" "C:\Users\Anthony\OneDrive\Documents\Computer Coding\Personal\C#\1 Class Libary Maker\! ! ! html bulider ! ! !\XMLToHTML.exe" /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

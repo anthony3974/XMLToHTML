@@ -22,7 +22,8 @@ namespace XMLToHTML
             string[] files; // gobal varable files
             string pathToStartScanning = ".."; // scan files here
             if (!manyScan) files = Directory.GetFiles(pathToStartScanning); // gets list of dir files in the current dir
-            else { files = FFScaner.ScanFiles(pathToStartScanning).ToArray(); } // gets list of dir files in the current dir
+            //else { files = FFScaner.ScanFiles(pathToStartScanning).ToArray(); } // gets list of dir files in the current dir
+            else { files = Directory.GetFiles(pathToStartScanning,"*",SearchOption.AllDirectories); } // gets list of dir files in the current dir
 
             foreach (string file in files) // main loop for each file in current dir
             {
@@ -97,7 +98,7 @@ namespace XMLToHTML
                             Read(); // reads the next line
                             if (line.Contains(":")) // if it contains :
                             {
-                                Write($"<section class=\"h3\"><strong>Data types:</strong> {type}"); // houses the data types of the type
+                                Write($"<section class=\"h3\"><strong>Data type:</strong> {type}"); // houses the data types of the type
                                 while (Regex.Match(line, "[^T]:").Success) // if current line with colon (:) dose not contain "T"
                                 {
                                     void settype(T tp) // method for creating the sub types in the data type
