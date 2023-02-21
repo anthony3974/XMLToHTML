@@ -22,8 +22,7 @@ namespace XMLToHTML
             string[] files; // gobal varable files
             string pathToStartScanning = ".."; // scan files here
             if (!manyScan) files = Directory.GetFiles(pathToStartScanning); // gets list of dir files in the current dir
-            //else { files = FFScaner.ScanFiles(pathToStartScanning).ToArray(); } // gets list of dir files in the current dir
-            else { files = Directory.GetFiles(pathToStartScanning,"*",SearchOption.AllDirectories); } // gets list of dir files in the current dir
+            else { files = Directory.GetFiles(pathToStartScanning, "*", SearchOption.AllDirectories); } // gets list of dir files in the current dir
 
             foreach (string file in files) // main loop for each file in current dir
             {
