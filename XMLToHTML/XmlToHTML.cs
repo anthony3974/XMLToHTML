@@ -13,14 +13,14 @@ namespace XMLToHTML
             // settings
             bool oneFile = false;
             string icoPath = null;
-            bool showXMLReads = true;
-            bool showHTMLWrites = true;
+            bool showXMLReads = false;
+            bool showHTMLWrites = false;
             bool manyScan = true;
             bool makeCss = true;
 
             // main code
             string[] files; // gobal varable files
-            string pathToStartScanning = ".."; // scan files here
+            string pathToStartScanning = Directory.GetCurrentDirectory(); // scan files here
             if (!manyScan) files = Directory.GetFiles(pathToStartScanning, "*.xml"); // gets list of dir files in the current dir
             else { files = Directory.GetFiles(pathToStartScanning, "*.xml", SearchOption.AllDirectories); } // gets list of dir files in the current dir
 
