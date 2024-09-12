@@ -1,13 +1,9 @@
 # XMLToHTML
 
-## makes an html page from the c# api xml documention
+## Converts C# API XML documentation into an HTML page
 
-Final version 
+**Version**: Final
 
-works for me, may work for you
-
-incuded template layout for xml at first folder location 'classlibary1.xml'
-
-and sample output html at first folder location 'classlibary1.html'
-
-
+- Works for me, may work for you.
+- Includes a template XML layout. File name: `classlibrary1.xml`.
+- Sample output HTML is provided. File name: `classlibrary1.html`.

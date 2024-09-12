@@ -13,8 +13,8 @@ namespace XMLToHTML
             // settings
             bool oneFile = false;
             string icoPath = null;
-            bool showXMLReads = false;
-            bool showHTMLWrites = false;
+            bool showXMLReads = true;
+            bool showHTMLWrites = true;
             bool manyScan = true;
             bool makeCss = true;
 
