@@ -2,12 +2,12 @@
 
 ## makes an html page from the c# api xml documention
 
-version Final
+Final version 
 
 works for me, may work for you
 
-incuded template layout for xml at fist folder location 'classlibary1.xml'
+incuded template layout for xml at first folder location 'classlibary1.xml'
 
-and sample output html at fist folder location 'classlibary1.html'
+and sample output html at first folder location 'classlibary1.html'
 
 
